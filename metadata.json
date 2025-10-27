@@ -1,0 +1,5 @@
+{
+  "name": "Zenith Ledger: Online Accounting",
+  "description": "An online, double-entry accounting application inspired by GnuCash. It provides core accounting functionalities like managing a chart of accounts, recording transactions, and viewing account registers, all within a secure, web-based interface. Includes AI-powered transaction categorization.",
+  "requestFramePermissions": []
+}
