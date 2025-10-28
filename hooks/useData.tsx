@@ -50,7 +50,7 @@ const useMongoState = <T,>(
       }
     };
     loadData();
-  }, [loadFn, defaultValue]);
+  }, []); // Empty dependency array - only run on mount
 
   // Save data to MongoDB when state changes (but not on initial load)
   useEffect(() => {
@@ -64,25 +64,33 @@ const useMongoState = <T,>(
       }
     };
     saveData();
-  }, [state, saveFn, isLoaded]);
+  }, [state, isLoaded]); // Remove saveFn from dependencies to prevent infinite loop
 
   return [state, setState];
 };
 
 export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // Memoize API functions to prevent infinite loops
+  const loadAccounts = useCallback(() => apiService.getAccounts(), []);
+  const saveAccounts = useCallback((data: Account[]) => apiService.saveAccounts(data), []);
+  const loadTransactions = useCallback(() => apiService.getTransactions(), []);
+  const saveTransactions = useCallback((data: Transaction[]) => apiService.saveTransactions(data), []);
+  const loadBudgets = useCallback(() => apiService.getBudgets(), []);
+  const saveBudgets = useCallback((data: Budgets) => apiService.saveBudgets(data), []);
+
   const [accounts, setAccounts] = useMongoState<Account[]>(
-    () => apiService.getAccounts(),
-    (data) => apiService.saveAccounts(data),
+    loadAccounts,
+    saveAccounts,
     INITIAL_ACCOUNTS
   );
   const [transactions, setTransactions] = useMongoState<Transaction[]>(
-    () => apiService.getTransactions(),
-    (data) => apiService.saveTransactions(data),
+    loadTransactions,
+    saveTransactions,
     []
   );
   const [budgets, setBudgets] = useMongoState<Budgets>(
-    () => apiService.getBudgets(),
-    (data) => apiService.saveBudgets(data),
+    loadBudgets,
+    saveBudgets,
     {}
   );
 
