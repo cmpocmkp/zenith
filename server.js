@@ -1,9 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import { MongoClient } from 'mongodb';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // MongoDB configuration
 const MONGODB_URI = 'mongodb://mongo:zTCtVuAqZoZLEhRogJKERDUaxodKCTKj@switchyard.proxy.rlwy.net:50611';
@@ -15,6 +20,9 @@ let db;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Connect to MongoDB
 async function connectToMongoDB() {
@@ -178,6 +186,15 @@ app.post('/api/budgets', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+// Catch-all handler: send back React's index.html file for client-side routing
+app.use((req, res) => {
+  // Skip API routes
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API endpoint not found' });
+  }
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // Start server

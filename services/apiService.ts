@@ -1,6 +1,8 @@
 import { Account, Transaction, Budgets } from '../types';
 
-const API_BASE_URL = 'http://localhost:3001/api';
+// Use environment variable for API base URL, fallback to current origin for production or localhost for development
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
+  (import.meta.env.PROD ? `${window.location.origin}/api` : 'http://localhost:3001/api');
 
 class ApiService {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {

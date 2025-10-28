@@ -5,18 +5,21 @@ A modern, full-stack accounting application built with React, TypeScript, and Mo
 ## 🚀 Features
 
 ### Core Accounting
+
 - **Chart of Accounts**: Hierarchical account structure with assets, liabilities, equity, income, and expenses
 - **Double-Entry Bookkeeping**: Complete transaction recording with automatic balance validation
 - **Account Management**: Create, edit, and organize accounts with opening balances
 - **Transaction Recording**: Detailed transaction entry with multiple splits
 
 ### Financial Management
+
 - **Real-time Dashboard**: Live financial overview with key metrics and charts
 - **Financial Reports**: Balance sheet, income statement, and cash flow reports
 - **Budget Tracking**: Set and monitor budgets for different accounts and periods
 - **Monthly Trends**: Visual representation of income and expenses over time
 
 ### Advanced Features
+
 - **AI Integration**: Smart transaction suggestions using Google Gemini API
 - **Data Persistence**: MongoDB backend for reliable data storage
 - **Responsive Design**: Modern UI that works on desktop and mobile
@@ -25,6 +28,7 @@ A modern, full-stack accounting application built with React, TypeScript, and Mo
 ## 🛠 Tech Stack
 
 ### Frontend
+
 - **React 19** - Modern UI library
 - **TypeScript** - Type-safe development
 - **Vite** - Fast build tool and dev server
@@ -32,36 +36,43 @@ A modern, full-stack accounting application built with React, TypeScript, and Mo
 - **React Router** - Client-side routing
 
 ### Backend
+
 - **Express.js** - Web application framework
 - **Node.js** - JavaScript runtime
 - **MongoDB** - NoSQL database
 - **CORS** - Cross-origin resource sharing
 
 ### AI & External Services
+
 - **Google Gemini API** - AI-powered transaction suggestions
 - **MongoDB Atlas** - Cloud database hosting
 
 ## 📦 Installation
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/cmpocmkp/zenith.git
    cd zenith
    ```
 
 2. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**:
    Create a `.env` file in the root directory:
+
    ```env
    GEMINI_API_KEY=your_gemini_api_key_here
    MONGODB_URI=mongodb://your_mongodb_connection_string
+   VITE_API_BASE_URL=http://localhost:3001/api
    ```
 
 4. **Start the development servers**:
+
    ```bash
    npm run dev:full
    ```
@@ -101,13 +112,17 @@ zenith-ledger/
 ## 🔧 Configuration
 
 ### MongoDB Setup
+
 The application uses MongoDB for data persistence. Update the connection string in `server.js`:
+
 ```javascript
-const MONGODB_URI = 'your_mongodb_connection_string';
+const MONGODB_URI = "your_mongodb_connection_string";
 ```
 
 ### Gemini AI Setup
+
 To enable AI features, add your Gemini API key to the environment variables:
+
 ```env
 GEMINI_API_KEY=your_api_key_here
 ```
@@ -115,11 +130,13 @@ GEMINI_API_KEY=your_api_key_here
 ## 📊 Database Schema
 
 ### Collections
+
 - **accounts**: Chart of accounts with hierarchical structure
 - **transactions**: Double-entry transactions with splits
 - **budgets**: Budget data organized by fiscal year and account
 
 ### Sample Account Structure
+
 ```
 Assets
 ├── Current Assets
@@ -149,6 +166,7 @@ Expenses
 ## 🌐 API Endpoints
 
 ### Accounts
+
 - `GET /api/accounts` - Get all accounts
 - `POST /api/accounts` - Create new account
 - `PUT /api/accounts/:id` - Update account
@@ -156,6 +174,7 @@ Expenses
 - `POST /api/accounts/bulk` - Bulk update accounts
 
 ### Transactions
+
 - `GET /api/transactions` - Get all transactions
 - `POST /api/transactions` - Create new transaction
 - `PUT /api/transactions/:id` - Update transaction
@@ -163,37 +182,60 @@ Expenses
 - `POST /api/transactions/bulk` - Bulk update transactions
 
 ### Budgets
+
 - `GET /api/budgets` - Get budget data
 - `POST /api/budgets` - Update budget data
 
 ### Health
+
 - `GET /api/health` - Check API and database status
 
 ## 🚀 Deployment
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - MongoDB database
 - Google Gemini API key (optional)
 
 ### Production Build
-1. Build the frontend:
+
+1. Build the frontend and start the server (single command):
+
+   ```bash
+   npm run build:server
+   ```
+
+   Or build and start separately:
+
    ```bash
    npm run build
+   npm start
    ```
 
-2. Start the backend server:
-   ```bash
-   node server.js
-   ```
+2. The server will serve both the API and the React frontend on the same port
 
-3. Serve the frontend build files through your web server
+### Railway Deployment
+
+For Railway deployment, the application automatically:
+
+- Uses the `PORT` environment variable provided by Railway
+- Serves the React frontend and API from the same port
+- Automatically detects the production environment for API URL configuration
+
+Set these environment variables in your Railway project:
+
+- `MONGODB_URI` - Your MongoDB connection string
+- `GEMINI_API_KEY` - For AI features (optional)
 
 ### Environment Variables
+
 Set these environment variables in production:
+
 - `GEMINI_API_KEY` - For AI features
 - `MONGODB_URI` - Database connection string
 - `PORT` - Backend server port (default: 3001)
+- `VITE_API_BASE_URL` - Frontend API base URL (e.g., `https://your-backend-domain.com/api`)
 
 ## 🤝 Contributing
 
